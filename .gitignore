@@ -26,3 +26,4 @@ shot_*.py
 *.njsproj
 *.sln
 *.sw?
+public/assets/scroll.mp4

@@ -36,6 +36,76 @@ function Reveal({ children, className = '', delay = 0 }) {
   )
 }
 
+/* pinned, scroll-scrubbed frame sequence (Apple-style) — manual RAF, Lenis-proof */
+function ScrollSequence({ count = 96, eyebrow, title }) {
+  const wrapRef = useRef(null)
+  const canvasRef = useRef(null)
+  const overlayRef = useRef(null)
+  const imgs = useRef([])
+
+  useEffect(() => {
+    const arr = []
+    for (let i = 0; i < count; i++) {
+      const im = new Image()
+      im.src = `${BASE}assets/seq/f_${String(i).padStart(3, '0')}.jpg`
+      arr.push(im)
+    }
+    imgs.current = arr
+  }, [count])
+
+  useEffect(() => {
+    const cv = canvasRef.current
+    const ctx = cv.getContext('2d')
+    let cur = -1, raf
+
+    const draw = (idx) => {
+      const img = imgs.current[idx] || imgs.current.find((m) => m && m.complete)
+      if (!img || !img.complete || !img.naturalWidth) return
+      const cw = cv.width, ch = cv.height
+      const ir = img.naturalWidth / img.naturalHeight
+      let dw, dh, dx, dy
+      if (cw / ch > ir) { dw = cw; dh = cw / ir; dx = 0; dy = (ch - dh) / 2 }
+      else { dh = ch; dw = ch * ir; dy = 0; dx = (cw - dw) / 2 }
+      ctx.clearRect(0, 0, cw, ch)
+      ctx.drawImage(img, dx, dy, dw, dh)
+    }
+    const resize = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      cv.width = Math.floor(window.innerWidth * dpr)
+      cv.height = Math.floor(window.innerHeight * dpr)
+      cur = -1
+    }
+    const render = () => {
+      const r = wrapRef.current.getBoundingClientRect()
+      const total = r.height - window.innerHeight
+      const p = total > 0 ? Math.min(1, Math.max(0, -r.top / total)) : 0
+      const idx = Math.min(count - 1, Math.max(0, Math.round(p * (count - 1))))
+      if (idx !== cur) { cur = idx; draw(idx) }
+      const o = p < 0.12 ? p / 0.12 : (p > 0.82 ? Math.max(0, (1 - p) / 0.18) : 1)
+      if (overlayRef.current) overlayRef.current.style.opacity = o
+      raf = requestAnimationFrame(render)
+    }
+    resize()
+    window.addEventListener('resize', resize)
+    imgs.current.forEach((im) => { im.onload = () => { if (cur === 0) draw(0) } })
+    raf = requestAnimationFrame(render)
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize) }
+  }, [count])
+
+  return (
+    <section className="seq" ref={wrapRef}>
+      <div className="seq-sticky">
+        <canvas ref={canvasRef} className="seq-canvas" />
+        <div className="seq-vign" />
+        <div className="seq-overlay" ref={overlayRef}>
+          <p className="eyebrow light">{eyebrow}</p>
+          <h2 className="big">{title}</h2>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 /* full-bleed frame with scroll parallax on the image */
 function ParallaxFrame({ children, src, alt, label, reverse }) {
   const ref = useRef(null)
@@ -107,16 +177,19 @@ export default function App() {
         <div className="scroll-cue">SCROLL TO EXPLORE</div>
       </header>
 
-      {/* THE SHIFT */}
-      <section className="band statement">
+      {/* THE SHIFT — scroll-scrubbed cinematic chapter */}
+      <ScrollSequence
+        count={96}
+        eyebrow="The shift"
+        title={<>Influence is everywhere.<br /><span className="muted">Monetisation isn’t.</span></>}
+      />
+
+      {/* THE SHIFT — supporting line */}
+      <section className="band tight">
         <Reveal>
-          <p className="eyebrow">The shift</p>
-          <h2 className="big">
-            Influence is everywhere.<br /><span className="muted">Monetisation isn’t.</span>
-          </h2>
-          <p className="lead">
+          <p className="lead big-lead">
             A generation has built real audiences and real culture. Almost none of them have built
-            a business on top of it. That gap is the entire opportunity.
+            a business on top of it. <span className="white">That gap is the entire opportunity.</span>
           </p>
         </Reveal>
       </section>
