@@ -26,13 +26,29 @@ function Reveal({ children, className = '', delay = 0 }) {
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 34 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 56, filter: 'blur(7px)' }}
+      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
       viewport={{ once: true, margin: '-90px' }}
-      transition={{ duration: 0.9, ease, delay }}
+      transition={{ duration: 1.0, ease, delay }}
     >
       {children}
     </motion.div>
+  )
+}
+
+/* full-bleed frame with scroll parallax on the image */
+function ParallaxFrame({ children, src, alt, label, reverse }) {
+  const ref = useRef(null)
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
+  const y = useTransform(scrollYProgress, [0, 1], ['-12%', '12%'])
+  const scale = useTransform(scrollYProgress, [0, 1], [1.15, 1])
+  return (
+    <section className={`frame-band ${reverse ? 'reverse' : ''}`} ref={ref}>
+      <motion.div className="frame-media" style={{ y, scale }}>
+        <Frame src={src} alt={alt} label={label} />
+      </motion.div>
+      <div className="frame-overlay">{children}</div>
+    </section>
   )
 }
 
@@ -131,22 +147,19 @@ export default function App() {
       </section>
 
       {/* WHAT FANGRAM IS */}
-      <section className="frame-band">
-        <Frame src={`${BASE}assets/render-connect.jpg`} alt="" label="Hero render: talent · fans · brands" />
-        <div className="frame-overlay">
-          <Reveal>
-            <p className="eyebrow light">What FanGram is</p>
-            <h2 className="big">
-              The business engine<br />that sits around talent.
-            </h2>
-            <p className="lead">
-              One platform connecting <b>talent, fans, and brands</b> through commerce, content,
-              experiences, and partnerships. Talent keeps control of their services, their pricing,
-              and their brand. We build and run the business so they can focus on the craft.
-            </p>
-          </Reveal>
-        </div>
-      </section>
+      <ParallaxFrame src={`${BASE}assets/render-connect.jpg`} alt="" label="Render: talent · fans · brands">
+        <Reveal>
+          <p className="eyebrow light">What FanGram is</p>
+          <h2 className="big">
+            The business engine<br />that sits around talent.
+          </h2>
+          <p className="lead">
+            One platform connecting <b>talent, fans, and brands</b> through commerce, content,
+            experiences, and partnerships. Talent keeps control of their services, their pricing,
+            and their brand. We build and run the business so they can focus on the craft.
+          </p>
+        </Reveal>
+      </ParallaxFrame>
 
       {/* THE PHASED LAUNCH */}
       <section className="band" id="launch">
@@ -176,20 +189,17 @@ export default function App() {
       </section>
 
       {/* THE MODEL */}
-      <section className="frame-band reverse">
-        <Frame src={`${BASE}assets/render-model.jpg`} alt="" label="Render: the 70/30 split" />
-        <div className="frame-overlay">
-          <Reveal>
-            <p className="eyebrow light">The model</p>
-            <h2 className="big"><span className="flow-text">70</span> to talent.<br /><span className="flow-text">30</span> to the engine.</h2>
-            <p className="lead">
-              Talent keeps the majority, always. Our 30% buys them something they can’t build alone:
-              technology, fulfilment, brand deals, and a team running the operation. The take rate is
-              only defensible if it earns its keep, so every point of it ships real value.
-            </p>
-          </Reveal>
-        </div>
-      </section>
+      <ParallaxFrame src={`${BASE}assets/render-model.jpg`} alt="" label="Render: the 70/30 split" reverse>
+        <Reveal>
+          <p className="eyebrow light">The model</p>
+          <h2 className="big"><span className="flow-text">70</span> to talent.<br /><span className="flow-text">30</span> to the engine.</h2>
+          <p className="lead">
+            Talent keeps the majority, always. Our 30% buys them something they can’t build alone:
+            technology, fulfilment, brand deals, and a team running the operation. The take rate is
+            only defensible if it earns its keep, so every point of it ships real value.
+          </p>
+        </Reveal>
+      </ParallaxFrame>
 
       {/* GTM → SCALE */}
       <section className="band" id="scale">
