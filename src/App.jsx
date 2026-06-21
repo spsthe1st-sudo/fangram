@@ -1,0 +1,258 @@
+import { useEffect, useRef, useState } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import Lenis from 'lenis'
+import Hero3D from './components/Hero3D'
+import { STATS, PHASES, GTM, MOAT } from './data'
+import './App.css'
+
+const ease = [0.22, 1, 0.36, 1]
+const BASE = import.meta.env.BASE_URL
+
+/* full-bleed AI-render frame with graceful placeholder */
+function Frame({ src, alt, label }) {
+  const [failed, setFailed] = useState(false)
+  if (failed || !src) {
+    return (
+      <div className="frame-ph">
+        <span className="frame-ph-flow" />
+        <small>{label || 'AI render to follow'}</small>
+      </div>
+    )
+  }
+  return <img src={src} alt={alt} onError={() => setFailed(true)} />
+}
+
+function Reveal({ children, className = '', delay = 0 }) {
+  return (
+    <motion.div
+      className={className}
+      initial={{ opacity: 0, y: 34 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-90px' }}
+      transition={{ duration: 0.9, ease, delay }}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+export default function App() {
+  const heroRef = useRef(null)
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
+  const heroTextY = useTransform(scrollYProgress, [0, 1], [0, -120])
+  const heroFade = useTransform(scrollYProgress, [0, 0.8], [1, 0])
+
+  useEffect(() => {
+    const lenis = new Lenis({ duration: 1.1, smoothWheel: true })
+    const raf = (time) => { lenis.raf(time); requestAnimationFrame(raf) }
+    requestAnimationFrame(raf)
+    return () => lenis.destroy()
+  }, [])
+
+  return (
+    <div className="page">
+      {/* NAV */}
+      <nav className="nav">
+        <a href="#top" className="nav-logo">FANGRAM</a>
+        <div className="nav-links">
+          <a href="#wedge">The Opportunity</a>
+          <a href="#launch">The Launch</a>
+          <a href="#scale">The Scale</a>
+          <a href="#close">Vision</a>
+        </div>
+      </nav>
+
+      {/* HERO */}
+      <header className="hero" id="top" ref={heroRef}>
+        <div className="hero-canvas"><Hero3D /></div>
+        <motion.div className="hero-inner" style={{ y: heroTextY, opacity: heroFade }}>
+          <motion.h1
+            className="hero-title"
+            initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.1, ease, delay: 0.15 }}
+          >
+            FanGram
+          </motion.h1>
+          <motion.p
+            className="hero-sub"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            transition={{ duration: 1, ease, delay: 0.5 }}
+          >
+            Turning influence into a business.
+          </motion.p>
+          <motion.p
+            className="hero-line"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            transition={{ duration: 1, ease, delay: 0.7 }}
+          >
+            The platform that helps India’s talent build the business around their craft.
+          </motion.p>
+        </motion.div>
+        <div className="scroll-cue">SCROLL TO EXPLORE</div>
+      </header>
+
+      {/* THE SHIFT */}
+      <section className="band statement">
+        <Reveal>
+          <p className="eyebrow">The shift</p>
+          <h2 className="big">
+            Influence is everywhere.<br /><span className="muted">Monetisation isn’t.</span>
+          </h2>
+          <p className="lead">
+            A generation has built real audiences and real culture. Almost none of them have built
+            a business on top of it. That gap is the entire opportunity.
+          </p>
+        </Reveal>
+      </section>
+
+      {/* THE INDIA WEDGE */}
+      <section className="band" id="wedge">
+        <Reveal><p className="eyebrow">The opportunity · India first</p></Reveal>
+        <Reveal delay={0.05}>
+          <h2 className="big">
+            The biggest under-monetised<br />talent market on earth.
+          </h2>
+        </Reveal>
+        <div className="stats">
+          {STATS.map((s, i) => (
+            <Reveal key={s.l} delay={i * 0.08} className="stat">
+              <div className="stat-n flow-text">{s.n}</div>
+              <div className="stat-l">{s.l}</div>
+            </Reveal>
+          ))}
+        </div>
+        <Reveal delay={0.1}>
+          <p className="lead wide">
+            India has millions of creators and a rising tier of athletes with deeply engaged fans,
+            and almost no infrastructure to turn that into income. Cameo, Patreon and the rest barely
+            operate here. The shelf is empty. We take it before a funded copycat does.
+          </p>
+        </Reveal>
+      </section>
+
+      {/* WHAT FANGRAM IS */}
+      <section className="frame-band">
+        <Frame src={`${BASE}assets/render-connect.jpg`} alt="" label="Hero render: talent · fans · brands" />
+        <div className="frame-overlay">
+          <Reveal>
+            <p className="eyebrow light">What FanGram is</p>
+            <h2 className="big">
+              The business engine<br />that sits around talent.
+            </h2>
+            <p className="lead">
+              One platform connecting <b>talent, fans, and brands</b> through commerce, content,
+              experiences, and partnerships. Talent keeps control of their services, their pricing,
+              and their brand. We build and run the business so they can focus on the craft.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* THE PHASED LAUNCH */}
+      <section className="band" id="launch">
+        <Reveal><p className="eyebrow">The launch · built in phases</p></Reveal>
+        <Reveal delay={0.05}><h2 className="big">Earn the right to the next layer.</h2></Reveal>
+        <div className="phases">
+          {PHASES.map((p, i) => (
+            <motion.div
+              key={p.no}
+              className="phase"
+              style={{ '--accent': p.accent }}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.9, ease, delay: i * 0.12 }}
+            >
+              <div className="phase-top">
+                <span className="phase-no">{p.no}</span>
+                <span className="phase-dot" />
+              </div>
+              <h3 className="phase-name">{p.name}</h3>
+              <p className="phase-tag">{p.tag}</p>
+              <p className="phase-body">{p.body}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* THE MODEL */}
+      <section className="frame-band reverse">
+        <Frame src={`${BASE}assets/render-model.jpg`} alt="" label="Render: the 70/30 split" />
+        <div className="frame-overlay">
+          <Reveal>
+            <p className="eyebrow light">The model</p>
+            <h2 className="big"><span className="flow-text">70</span> to talent.<br /><span className="flow-text">30</span> to the engine.</h2>
+            <p className="lead">
+              Talent keeps the majority, always. Our 30% buys them something they can’t build alone:
+              technology, fulfilment, brand deals, and a team running the operation. The take rate is
+              only defensible if it earns its keep, so every point of it ships real value.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* GTM → SCALE */}
+      <section className="band" id="scale">
+        <Reveal><p className="eyebrow">From launch to scale</p></Reveal>
+        <Reveal delay={0.05}><h2 className="big">How I’d actually build it.</h2></Reveal>
+        <div className="gtm">
+          {GTM.map((g, i) => (
+            <Reveal key={g.k} delay={i * 0.08} className="gtm-row">
+              <div className="gtm-no flow-text">{String(i + 1).padStart(2, '0')}</div>
+              <div className="gtm-k">{g.k}</div>
+              <div className="gtm-v">{g.v}</div>
+            </Reveal>
+          ))}
+        </div>
+        <Reveal delay={0.1}>
+          <div className="cameo-note">
+            <span className="cameo-dot" />
+            <p>
+              <b>The lesson I’m building against:</b> Cameo hit a billion-dollar valuation and collapsed
+              because one-off shoutouts were a novelty, not a business. FanGram is built for repeat purchase
+              and recurring relationships from day one. Merch first, relationships next, never a gimmick.
+            </p>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* THE MOAT */}
+      <section className="band">
+        <Reveal><p className="eyebrow">Why it compounds</p></Reveal>
+        <Reveal delay={0.05}><h2 className="big">The moat isn’t a feature.<br />It’s the whole stack.</h2></Reveal>
+        <div className="moat">
+          {MOAT.map((m, i) => (
+            <Reveal key={m.k} delay={i * 0.1} className="moat-card">
+              <div className="moat-k">{m.k}</div>
+              <div className="moat-v">{m.v}</div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* CLOSE */}
+      <section className="band close" id="close">
+        <Reveal>
+          <p className="eyebrow">The vision</p>
+          <h2 className="big">
+            Build the layer where influence<br />becomes a <span className="flow-text">business</span>.
+          </h2>
+          <p className="lead">
+            Start with India’s talent, prove the engine on the people the world ignored, then take it
+            everywhere talent is rich and monetisation is thin. That’s the company I want to help build.
+          </p>
+          <div className="close-by">
+            <span>A point of view by</span>
+            <strong>Shaurya Pratap Singh</strong>
+            <span>for the FanGram EIR role</span>
+          </div>
+        </Reveal>
+      </section>
+
+      <footer className="footer">
+        <span>FanGram</span>
+        <span>Turning influence into a business</span>
+      </footer>
+    </div>
+  )
+}
