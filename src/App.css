@@ -6,6 +6,26 @@
   -webkit-text-fill-color: transparent; color: transparent;
 }
 
+/* scroll progress */
+.progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; transform-origin: 0 50%; background: var(--gradient-flow); z-index: 100; }
+
+/* cinematic film grain */
+.grain {
+  position: fixed; inset: 0; z-index: 90; pointer-events: none; opacity: 0.055; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* kinetic marquee */
+.marquee { overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 28px 0; white-space: nowrap; background: var(--carbon); }
+.marquee-row { display: inline-flex; }
+.marquee-item { display: inline-flex; align-items: center; font-size: clamp(26px, 4vw, 54px); font-weight: 300; letter-spacing: -0.01em; color: #fff; }
+.marquee-dot { margin: 0 40px; font-size: 16px; color: var(--flow-coral); transform: translateY(-2px); }
+
+/* nav underline */
+.nav-links a { position: relative; }
+.nav-links a::after { content: ''; position: absolute; left: 0; right: 100%; bottom: -5px; height: 1px; background: #fff; transition: right 0.35s ease; }
+.nav-links a:hover::after { right: 0; }
+
 /* ---------- NAV ---------- */
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 50;
@@ -119,11 +139,38 @@
 /* ---------- FOOTER ---------- */
 .footer { display: flex; justify-content: space-between; max-width: var(--max); margin: 0 auto; padding: 40px clamp(20px, 6vw, 80px); border-top: 1px solid var(--line); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ash); }
 
+/* ---------- SEGMENTS ---------- */
+.segs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 56px; }
+.seg { border: 1px solid var(--line); padding: 32px 28px; min-height: 280px; display: flex; flex-direction: column; background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent); transition: border-color 0.4s, transform 0.4s; }
+.seg:hover { border-color: var(--accent); transform: translateY(-4px); }
+.seg-tag { display: flex; align-items: center; gap: 10px; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 24px; }
+.seg-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+.seg-lead { font-size: 25px; font-weight: 300; color: #fff; letter-spacing: -0.01em; margin-bottom: 14px; }
+.seg-body { font-size: 14.5px; line-height: 1.6; color: var(--smoke); }
+
+/* ---------- REVENUE ---------- */
+.rev { margin-top: 48px; border-top: 1px solid var(--line); }
+.rev-row { display: grid; grid-template-columns: 64px 1.1fr 1.6fr; gap: 24px; padding: 24px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+.rev-no { font-size: 20px; font-weight: 300; }
+.rev-k { font-size: clamp(18px, 2vw, 24px); font-weight: 300; color: #fff; letter-spacing: -0.01em; }
+.rev-v { font-size: 15px; line-height: 1.55; color: var(--smoke); }
+
+/* ---------- FLYWHEEL ---------- */
+.fly { margin-top: 52px; max-width: 760px; }
+.fly-step { position: relative; padding: 20px 0; }
+.fly-no { font-size: 18px; font-weight: 300; margin-bottom: 8px; }
+.fly-k { font-size: clamp(22px, 2.6vw, 32px); font-weight: 300; color: #fff; letter-spacing: -0.015em; }
+.fly-v { font-size: 15.5px; line-height: 1.55; color: var(--smoke); margin-top: 8px; max-width: 44ch; }
+.fly-arrow { position: absolute; left: 0; bottom: -12px; color: var(--ash); font-size: 17px; }
+.fly-note { margin-top: 34px; }
+
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 860px) {
   .nav-links { display: none; }
   .stats { grid-template-columns: repeat(2, 1fr); gap: 22px; }
-  .phases, .moat { grid-template-columns: 1fr; }
+  .phases, .moat, .segs { grid-template-columns: 1fr; }
+  .rev-row { grid-template-columns: 40px 1fr; }
+  .rev-row .rev-v { grid-column: 1 / -1; }
   .gtm-row { grid-template-columns: 40px 1fr; }
   .gtm-row .gtm-v { grid-column: 1 / -1; }
   .frame-band.reverse .frame-overlay { text-align: left; align-items: flex-start; }

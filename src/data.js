@@ -8,39 +8,69 @@ export const STATS = [
   { n: '70/30', l: 'split — talent keeps the most' },
 ];
 
-export const PHASES = [
+export const SEGMENTS = [
   {
-    no: '01',
-    name: 'Fan Commerce',
-    tag: 'Signed merch & drops',
-    body: 'We launch where money already moves: signed merchandise and fan commerce. Tangible, repeatable, and the lowest-friction way to prove a fan will pay. This is the wedge, not a novelty.',
+    tag: 'Creators',
+    lead: 'We start with athletes.',
+    body: 'India’s most under-monetised stars, with the most loyal fans, in the middle of an NIL moment. Then musicians, then digital creators. The people the platforms reward last.',
     accent: 'var(--flow-green)',
   },
   {
-    no: '02',
-    name: 'Fan Engagement',
-    tag: 'Personalised access & experiences',
-    body: 'Then the relationship layer — personalised messages, interactions, and virtual experiences. Built for recurring revenue and real connection, deliberately avoiding the one-off shoutout trap that sank Cameo.',
+    tag: 'Fans',
+    lead: 'Superfans want in.',
+    body: 'Not another follow. Real access, signed pieces, a stake in the journey. The top 5% of fans drive most of the spend, and they are desperate for a way to.',
     accent: 'var(--flow-amber)',
   },
   {
-    no: '03',
-    name: 'Events & Brands',
-    tag: 'Appearances & partnerships',
-    body: 'Finally the high-value layer: events, appearances, and brand partnerships routed through FanGram’s fan data. The brand deals flow to talent, and the platform becomes the business they run on.',
+    tag: 'Brands',
+    lead: 'Brands want the real thing.',
+    body: 'Authentic, measurable reach into engaged communities, routed through the talent they already trust. Outcomes, not vanity impressions.',
     accent: 'var(--flow-coral)',
   },
 ];
 
+export const PHASES = [
+  {
+    no: '01', name: 'Fan Commerce', tag: 'Signed merch & drops',
+    body: 'We launch where money already moves: signed merchandise and fan commerce. Tangible, repeatable, the lowest-friction way to prove a fan will pay. The wedge, not a novelty.',
+    accent: 'var(--flow-green)',
+  },
+  {
+    no: '02', name: 'Fan Engagement', tag: 'Personalised access & experiences',
+    body: 'Then the relationship layer: personalised messages, interactions, virtual experiences. Built for recurring revenue and real connection, dodging the one-off shoutout trap that sank Cameo.',
+    accent: 'var(--flow-amber)',
+  },
+  {
+    no: '03', name: 'Events & Brands', tag: 'Appearances & partnerships',
+    body: 'Finally the high-value layer: events, appearances, brand partnerships routed through FanGram’s fan data. Brand deals flow to talent, and the platform becomes the business they run on.',
+    accent: 'var(--flow-coral)',
+  },
+];
+
+export const REVENUE = [
+  { k: 'Commerce commission', v: 'A clean cut of every merch and fan-commerce sale.' },
+  { k: 'Membership & access', v: 'Recurring fan subscriptions for ongoing access and perks.' },
+  { k: 'Brand-deal take', v: 'A share of every brand partnership routed through the platform.' },
+  { k: 'Creator tools', v: 'Premium tooling and analytics for talent who scale.' },
+  { k: 'Promoted discovery', v: 'Paid placement connecting brands and fans to the right talent.' },
+];
+
+export const FLYWHEEL = [
+  { k: 'Creators bring fans', v: 'Talent arrives with an audience no ad budget can buy.' },
+  { k: 'Fans bring spend and signal', v: 'Their purchases and data reveal exactly what works.' },
+  { k: 'Brands bring budgets', v: 'That signal pulls in brand money chasing real engagement.' },
+  { k: 'Budgets and tools keep talent', v: 'More income and better tooling make leaving unthinkable. Repeat.' },
+];
+
 export const GTM = [
-  { k: 'Supply-led wedge', v: 'Win a tight set of under-monetised but highly-engaged talent first. Fans follow talent, not platforms. Athletes are the goldmine — India’s NIL moment is now.' },
-  { k: 'Prove repeat, not GMV', v: 'The first cohort is a live test. The metric that matters is repeat purchase, not vanity volume. We scale only what fans come back for.' },
-  { k: 'Build the flywheel', v: 'More talent brings their fans; engaged fans attract brands; brand money pulls in more talent. Each rail makes the next one stronger.' },
-  { k: 'Then expand', v: 'India is the beachhead, not the ceiling. The same engine, proven here, travels to every market where talent is rich and monetisation is thin.' },
+  { k: 'Supply-led wedge', v: 'Win a tight set of under-monetised but highly-engaged athletes first. Fans follow talent, not platforms.' },
+  { k: 'Prove repeat, not GMV', v: 'The first cohort is a live test. The metric that matters is repeat purchase, not vanity volume.' },
+  { k: 'Spin the flywheel', v: 'Engaged fans attract brands; brand money and tools retain talent; talent brings more fans.' },
+  { k: 'Then expand', v: 'India is the beachhead, not the ceiling. The proven engine travels to every thin-monetisation market.' },
 ];
 
 export const MOAT = [
   { k: 'Fan data', v: 'The relationship and purchase history no single tool owns today.' },
-  { k: 'Multi-rail revenue', v: 'Merch, access, events, brand — diversified income that retains talent.' },
+  { k: 'Multi-rail revenue', v: 'Five income streams that diversify and retain talent.' },
   { k: 'The operating system', v: 'Talent focuses on craft; FanGram runs the business around it. That is the lock-in.' },
 ];

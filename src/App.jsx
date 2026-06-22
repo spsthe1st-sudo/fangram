@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Lenis from 'lenis'
 import Hero3D from './components/Hero3D'
-import { STATS, PHASES, GTM, MOAT } from './data'
+import { STATS, SEGMENTS, PHASES, REVENUE, FLYWHEEL, GTM, MOAT } from './data'
 import './App.css'
 
 const ease = [0.22, 1, 0.36, 1]
@@ -122,11 +122,30 @@ function ParallaxFrame({ children, src, alt, label, reverse }) {
   )
 }
 
+/* kinetic marquee band */
+function Marquee({ items }) {
+  const row = [...items, ...items]
+  return (
+    <div className="marquee">
+      <motion.div
+        className="marquee-row"
+        animate={{ x: ['0%', '-50%'] }}
+        transition={{ duration: 24, ease: 'linear', repeat: Infinity }}
+      >
+        {row.map((w, i) => (
+          <span className="marquee-item" key={i}>{w}<span className="marquee-dot">✦</span></span>
+        ))}
+      </motion.div>
+    </div>
+  )
+}
+
 export default function App() {
   const heroRef = useRef(null)
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
   const heroTextY = useTransform(scrollYProgress, [0, 1], [0, -120])
   const heroFade = useTransform(scrollYProgress, [0, 0.8], [1, 0])
+  const { scrollYProgress: pageProgress } = useScroll()
 
   useEffect(() => {
     const lenis = new Lenis({ duration: 1.1, smoothWheel: true })
@@ -137,13 +156,17 @@ export default function App() {
 
   return (
     <div className="page">
+      <motion.div className="progress" style={{ scaleX: pageProgress }} />
+      <div className="grain" aria-hidden />
+
       {/* NAV */}
       <nav className="nav">
         <a href="#top" className="nav-logo">FANGRAM</a>
         <div className="nav-links">
-          <a href="#wedge">The Opportunity</a>
-          <a href="#launch">The Launch</a>
-          <a href="#scale">The Scale</a>
+          <a href="#wedge">Opportunity</a>
+          <a href="#who">Audience</a>
+          <a href="#launch">Launch</a>
+          <a href="#model">Model</a>
           <a href="#close">Vision</a>
         </div>
       </nav>
@@ -234,6 +257,28 @@ export default function App() {
         </Reveal>
       </ParallaxFrame>
 
+      <Marquee items={['Athletes', 'Creators', 'Musicians', 'Entertainers', 'Public Figures', 'Fans', 'Brands']} />
+
+      {/* WHO IT'S FOR — three-sided segmentation */}
+      <section className="band" id="who">
+        <Reveal><p className="eyebrow">Who it’s for · a three-sided market</p></Reveal>
+        <Reveal delay={0.05}><h2 className="big">One platform, three sides,<br />one exchange of value.</h2></Reveal>
+        <div className="segs">
+          {SEGMENTS.map((s, i) => (
+            <motion.div
+              key={s.tag} className="seg" style={{ '--accent': s.accent }}
+              initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.9, ease, delay: i * 0.12 }}
+            >
+              <div className="seg-tag"><span className="seg-dot" />{s.tag}</div>
+              <h3 className="seg-lead">{s.lead}</h3>
+              <p className="seg-body">{s.body}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
       {/* THE PHASED LAUNCH */}
       <section className="band" id="launch">
         <Reveal><p className="eyebrow">The launch · built in phases</p></Reveal>
@@ -261,6 +306,27 @@ export default function App() {
         </div>
       </section>
 
+      {/* HOW IT MAKES MONEY — revenue streams */}
+      <section className="band" id="model">
+        <Reveal><p className="eyebrow">The business model</p></Reveal>
+        <Reveal delay={0.05}><h2 className="big">Five rails of revenue,<br />not one fragile one.</h2></Reveal>
+        <Reveal delay={0.1}>
+          <p className="lead wide">
+            Cameo lived and died on a single rail. FanGram earns across the whole relationship, so no
+            one channel can sink it, and talent has every reason to stay.
+          </p>
+        </Reveal>
+        <div className="rev">
+          {REVENUE.map((r, i) => (
+            <Reveal key={r.k} delay={i * 0.06} className="rev-row">
+              <div className="rev-no flow-text">{String(i + 1).padStart(2, '0')}</div>
+              <div className="rev-k">{r.k}</div>
+              <div className="rev-v">{r.v}</div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
       {/* THE MODEL */}
       <ParallaxFrame src={`${BASE}assets/render-model.jpg`} alt="" label="Render: the 70/30 split" reverse>
         <Reveal>
@@ -273,6 +339,33 @@ export default function App() {
           </p>
         </Reveal>
       </ParallaxFrame>
+
+      {/* THE COLLABORATION FLYWHEEL */}
+      <section className="band" id="flywheel">
+        <Reveal><p className="eyebrow">Why it compounds · the flywheel</p></Reveal>
+        <Reveal delay={0.05}><h2 className="big">Each side makes<br />the next one stronger.</h2></Reveal>
+        <div className="fly">
+          {FLYWHEEL.map((f, i) => (
+            <motion.div
+              key={f.k} className="fly-step"
+              initial={{ opacity: 0, y: 36 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-70px' }}
+              transition={{ duration: 0.85, ease, delay: i * 0.1 }}
+            >
+              <div className="fly-no flow-text">{String(i + 1).padStart(2, '0')}</div>
+              <div className="fly-k">{f.k}</div>
+              <div className="fly-v">{f.v}</div>
+              {i < FLYWHEEL.length - 1 && <div className="fly-arrow">↓</div>}
+            </motion.div>
+          ))}
+        </div>
+        <Reveal delay={0.1}>
+          <p className="lead wide fly-note">
+            Spin it once and it doesn’t stop: more talent brings more fans, fan spend pulls brand
+            budgets, budgets and tools keep talent. The loop is the moat.
+          </p>
+        </Reveal>
+      </section>
 
       {/* GTM → SCALE */}
       <section className="band" id="scale">
