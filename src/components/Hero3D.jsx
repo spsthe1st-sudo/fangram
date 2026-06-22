@@ -1,8 +1,15 @@
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Sparkles } from '@react-three/drei'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
-import { useRef, useMemo } from 'react'
+import { useRef, useMemo, useState, useEffect } from 'react'
 import * as THREE from 'three'
+
+/* device tier — decide geometry detail / effects once, up front */
+const isMobile = typeof window !== 'undefined' &&
+  (window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 760)
+// detail 80 ≈ 128k tris running double simplex-noise per vertex per frame = the lag.
+// 28 (mobile) / 48 (desktop) look identical under the displacement but are far cheaper.
+const DETAIL = isMobile ? 28 : 48
 
 /* classic Ashima 3D simplex noise */
 const NOISE = `
@@ -71,32 +78,59 @@ function Blob() {
     uD: { value: new THREE.Color('#8b5cff') },
   }), [])
   useFrame((state, delta) => {
-    uniforms.uTime.value += delta
+    const d = Math.min(delta, 0.05) // clamp so a dropped frame doesn't jump the animation
+    uniforms.uTime.value += d
     if (mesh.current) {
-      mesh.current.rotation.y += delta * 0.1
-      mesh.current.rotation.x += delta * 0.04
+      mesh.current.rotation.y += d * 0.1
+      mesh.current.rotation.x += d * 0.04
       mesh.current.position.x = THREE.MathUtils.lerp(mesh.current.position.x, state.pointer.x * 0.3, 0.04)
       mesh.current.position.y = THREE.MathUtils.lerp(mesh.current.position.y, state.pointer.y * 0.3, 0.04)
     }
   })
   return (
     <mesh ref={mesh} scale={1.0}>
-      <icosahedronGeometry args={[1.5, 80]} />
+      <icosahedronGeometry args={[1.5, DETAIL]} />
       <shaderMaterial vertexShader={VERT} fragmentShader={FRAG} uniforms={uniforms} />
     </mesh>
   )
 }
 
 export default function Hero3D() {
+  const wrap = useRef(null)
+  const [active, setActive] = useState(true)
+
+  // stop rendering the WebGL scene entirely once the hero scrolls out of view.
+  // a 60fps shader loop running behind the whole page is a big part of the lag.
+  useEffect(() => {
+    const el = wrap.current
+    if (!el) return
+    const io = new IntersectionObserver(
+      ([e]) => setActive(e.isIntersecting),
+      { rootMargin: '120px' }
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+
   return (
-    <Canvas camera={{ position: [0, 0, 5.6], fov: 42 }} dpr={[1, 2]} gl={{ antialias: true, alpha: true }}>
-      <Blob />
-      <Sparkles count={70} scale={[11, 7, 6]} size={2} speed={0.3} opacity={0.55} color="#ffffff" />
-      <Sparkles count={45} scale={[9, 6, 5]} size={3.2} speed={0.22} opacity={0.4} color="#ff7ab0" />
-      <Sparkles count={35} scale={[10, 6.5, 5]} size={2.6} speed={0.26} opacity={0.4} color="#7fe9c0" />
-      <EffectComposer>
-        <Bloom mipmapBlur intensity={0.9} luminanceThreshold={0.4} luminanceSmoothing={0.6} radius={0.7} />
-      </EffectComposer>
-    </Canvas>
+    <div ref={wrap} style={{ width: '100%', height: '100%' }}>
+      <Canvas
+        camera={{ position: [0, 0, 5.6], fov: 42 }}
+        dpr={isMobile ? 1 : [1, 1.5]}
+        frameloop={active ? 'always' : 'never'}
+        gl={{ antialias: !isMobile, alpha: true, powerPreference: 'high-performance' }}
+      >
+        <Blob />
+        {!isMobile && (
+          <>
+            <Sparkles count={60} scale={[11, 7, 6]} size={2} speed={0.3} opacity={0.55} color="#ffffff" />
+            <Sparkles count={36} scale={[9, 6, 5]} size={3.2} speed={0.22} opacity={0.4} color="#ff7ab0" />
+            <EffectComposer>
+              <Bloom mipmapBlur intensity={0.85} luminanceThreshold={0.4} luminanceSmoothing={0.6} radius={0.7} />
+            </EffectComposer>
+          </>
+        )}
+      </Canvas>
+    </div>
   )
 }

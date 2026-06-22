@@ -7,6 +7,8 @@ import './App.css'
 
 const ease = [0.22, 1, 0.36, 1]
 const BASE = import.meta.env.BASE_URL
+const COARSE = typeof window !== 'undefined' &&
+  (window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 760)
 
 /* full-bleed AI-render frame with graceful placeholder */
 function Frame({ src, alt, label }) {
@@ -23,13 +25,16 @@ function Frame({ src, alt, label }) {
 }
 
 function Reveal({ children, className = '', delay = 0 }) {
+  // animated blur filters are cheap on desktop but cause real jank on mobile GPUs
+  const from = COARSE ? { opacity: 0, y: 32 } : { opacity: 0, y: 56, filter: 'blur(7px)' }
+  const to = COARSE ? { opacity: 1, y: 0 } : { opacity: 1, y: 0, filter: 'blur(0px)' }
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 56, filter: 'blur(7px)' }}
-      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      initial={from}
+      whileInView={to}
       viewport={{ once: true, margin: '-90px' }}
-      transition={{ duration: 1.0, ease, delay }}
+      transition={{ duration: COARSE ? 0.7 : 1.0, ease, delay }}
     >
       {children}
     </motion.div>
@@ -70,7 +75,7 @@ function ScrollSequence({ count = 96, eyebrow, title }) {
       ctx.drawImage(img, dx, dy, dw, dh)
     }
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      const dpr = Math.min(window.devicePixelRatio || 1, COARSE ? 1.25 : 1.75)
       cv.width = Math.floor(window.innerWidth * dpr)
       cv.height = Math.floor(window.innerHeight * dpr)
       cur = -1
