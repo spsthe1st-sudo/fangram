@@ -6,6 +6,10 @@
   -webkit-text-fill-color: transparent; color: transparent;
 }
 
+/* page-load intro */
+.intro { position: fixed; inset: 0; z-index: 300; background: #000; display: flex; align-items: center; justify-content: center; }
+.intro-word { font-size: clamp(48px, 9vw, 130px); font-weight: 300; letter-spacing: -0.03em; color: #fff; }
+
 /* scroll progress */
 .progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; transform-origin: 0 50%; background: var(--gradient-flow); z-index: 100; }
 
