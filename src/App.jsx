@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform, useVelocity, useSpring } from 'framer-motion'
 import Lenis from 'lenis'
 import Hero3D from './components/Hero3D'
-import { STATS, SEGMENTS, PHASES, REVENUE, FLYWHEEL, GTM, ROADMAP, COMPETE, HARDQ, MOAT } from './data'
+import { STATS, SEGMENTS, PHASES, CHALLENGE, REVENUE, FLYWHEEL, GTM, ROADMAP, COMPETE, HARDQ, MOAT } from './data'
 import './App.css'
 
 const ease = [0.22, 1, 0.36, 1]
@@ -392,6 +392,40 @@ export default function App() {
             </motion.div>
           ))}
         </div>
+      </section>
+
+      {/* THE WEDGE MECHANIC — brand challenges */}
+      <section className="band" id="challenge">
+        <Reveal><p className="eyebrow">The wedge · how we win the market</p></Reveal>
+        <Reveal delay={0.05}><h2 className="big">Brands overpay a few.<br />We mobilise the<span className="flow-text"> many</span>.</h2></Reveal>
+        <Reveal delay={0.1}>
+          <p className="lead wide">
+            Brands pour money into a handful of mainstream creators and ignore the most engaged ones
+            of all. So we flip it: a brand funds a contest, and the entire long tail competes to sell
+            for them. The brand wins reach and sales; the creator wins their first path to monetise;
+            FanGram wins the whole market without paying to acquire it.
+          </p>
+        </Reveal>
+        <div className="gtm">
+          {CHALLENGE.map((c, i) => (
+            <Reveal key={c.k} delay={i * 0.07} className="gtm-row">
+              <div className="gtm-no flow-text">{String(i + 1).padStart(2, '0')}</div>
+              <div className="gtm-k">{c.k}</div>
+              <div className="gtm-v">{c.v}</div>
+            </Reveal>
+          ))}
+        </div>
+        <Reveal delay={0.1}>
+          <div className="cameo-note">
+            <span className="cameo-dot" />
+            <p>
+              <b>Why this is the unlock:</b> every marketplace dies waiting for one side to show up.
+              Here the brand’s budget acquires our creators, the creators bring their fans, and every
+              contest teaches us exactly who drives sales. Supply, demand, distribution and data, from
+              a single move.
+            </p>
+          </div>
+        </Reveal>
       </section>
 
       {/* HOW IT MAKES MONEY — revenue streams */}

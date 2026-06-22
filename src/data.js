@@ -31,20 +31,29 @@ export const SEGMENTS = [
 
 export const PHASES = [
   {
-    no: '01', name: 'Fan Commerce', tag: 'Signed merch & drops',
-    body: 'We launch where money already moves: signed merchandise and fan commerce. Tangible, repeatable, the lowest-friction way to prove a fan will pay. The wedge, not a novelty.',
+    no: '01', name: 'Brand Challenges', tag: 'Brand-funded creator contests',
+    body: 'We launch with the wedge that pays for itself: brands fund contests, hundreds of micro-creators compete to make content around a product. Brands fund our supply, creators arrive with intent, and we get the whole market without paying to acquire it.',
     accent: 'var(--flow-green)',
   },
   {
-    no: '02', name: 'Fan Engagement', tag: 'Personalised access & experiences',
-    body: 'Then the relationship layer: personalised messages, interactions, virtual experiences. Built for recurring revenue and real connection, dodging the one-off shoutout trap that sank Cameo.',
+    no: '02', name: 'Creator Storefronts', tag: 'Merch, drops & fan commerce',
+    body: 'The creators the contests surface graduate into stores: signed merch, drops, fan commerce. The lowest-friction proof a fan will pay, now aimed at talent we already know converts. Money where it already moves.',
     accent: 'var(--flow-amber)',
   },
   {
-    no: '03', name: 'Events & Brands', tag: 'Appearances & partnerships',
-    body: 'Finally the high-value layer: events, appearances, brand partnerships routed through FanGram’s fan data. Brand deals flow to talent, and the platform becomes the business they run on.',
+    no: '03', name: 'Fans & Events', tag: 'Access, memberships, appearances',
+    body: 'Then the recurring layer: personalised access, memberships, events and brand partnerships routed through FanGram’s fan data. The platform becomes the business talent runs on, not a one-off shoutout that sank Cameo.',
     accent: 'var(--flow-coral)',
   },
+]
+
+// the contest mechanic — FanGram's customer-acquisition engine
+export const CHALLENGE = [
+  { k: 'A brand puts up the budget', v: 'Product plus a prize pool, for a fraction of one mainstream-creator retainer. Flexible, performance-led, not a fixed contract.' },
+  { k: 'The long tail competes', v: 'Hundreds of micro and nano creators (10k–500k, the highest engagement on earth) make authentic content around the product to win.' },
+  { k: 'The brand wins big', v: 'Volume reach, real trackable sales, and a library of owned UGC to repurpose in their own ads. More for less, and measurable.' },
+  { k: 'Creators finally monetise', v: 'Cash, merch and exposure with a real leaderboard. Their first clear path to income, and no one walks away with nothing.' },
+  { k: 'The flywheel ignites', v: 'Every creator lands on FanGram and their fans follow. Winners graduate into storefronts and the five rails. Brands fund the whole loop.' },
 ];
 
 export const REVENUE = [
