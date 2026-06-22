@@ -10,9 +10,9 @@ export const STATS = [
 
 export const SEGMENTS = [
   {
-    tag: 'Creators',
-    lead: 'We start with athletes.',
-    body: 'India’s most under-monetised stars, with the most loyal fans, in the middle of an NIL moment. Then musicians, then digital creators. The people the platforms reward last.',
+    tag: 'Talent',
+    lead: 'Every kind of talent.',
+    body: 'Athletes, musicians, entertainers, digital creators, public figures, anyone with an audience and a story. We meet talent where monetisation is thinnest and fan love runs highest.',
     accent: 'var(--flow-green)',
   },
   {
@@ -63,7 +63,7 @@ export const FLYWHEEL = [
 ];
 
 export const GTM = [
-  { k: 'Supply-led wedge', v: 'Win a tight set of under-monetised but highly-engaged athletes first. Fans follow talent, not platforms.' },
+  { k: 'Supply-led wedge', v: 'Win a tight set of under-monetised but highly-engaged talent first, across every category. Fans follow talent, not platforms.' },
   { k: 'Prove repeat, not GMV', v: 'The first cohort is a live test. The metric that matters is repeat purchase, not vanity volume.' },
   { k: 'Spin the flywheel', v: 'Engaged fans attract brands; brand money and tools retain talent; talent brings more fans.' },
   { k: 'Then expand', v: 'India is the beachhead, not the ceiling. The proven engine travels to every thin-monetisation market.' },

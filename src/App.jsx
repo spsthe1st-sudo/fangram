@@ -235,9 +235,9 @@ export default function App() {
         </div>
         <Reveal delay={0.1}>
           <p className="lead wide">
-            India has millions of creators and a rising tier of athletes with deeply engaged fans,
-            and almost no infrastructure to turn that into income. Cameo, Patreon and the rest barely
-            operate here. The shelf is empty. We take it before a funded copycat does.
+            India has millions of creators, athletes, musicians and public figures with deeply engaged
+            fans, and almost no infrastructure to turn that into income. Cameo, Patreon and the rest
+            barely operate here. The shelf is empty. We take it before a funded copycat does.
           </p>
         </Reveal>
       </section>
@@ -418,6 +418,10 @@ export default function App() {
             everywhere talent is rich and monetisation is thin. That’s the company I want to help build.
           </p>
           <a href="#top" className="close-cta">Take it from the top ↑</a>
+          <p className="close-note">
+            A first look, not a fixed plan. This is how I see it today, every line here is open to
+            pivot as we get more context. The thinking is mine; the direction is ours to shape.
+          </p>
           <div className="close-by">
             <span>A point of view by</span>
             <strong>Shaurya Pratap Singh</strong>
