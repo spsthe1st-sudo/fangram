@@ -1,4 +1,5 @@
 import { Canvas, useFrame } from '@react-three/fiber'
+import { Sparkles } from '@react-three/drei'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import { useRef, useMemo } from 'react'
 import * as THREE from 'three'
@@ -90,6 +91,9 @@ export default function Hero3D() {
   return (
     <Canvas camera={{ position: [0, 0, 5.6], fov: 42 }} dpr={[1, 2]} gl={{ antialias: true, alpha: true }}>
       <Blob />
+      <Sparkles count={70} scale={[11, 7, 6]} size={2} speed={0.3} opacity={0.55} color="#ffffff" />
+      <Sparkles count={45} scale={[9, 6, 5]} size={3.2} speed={0.22} opacity={0.4} color="#ff7ab0" />
+      <Sparkles count={35} scale={[10, 6.5, 5]} size={2.6} speed={0.26} opacity={0.4} color="#7fe9c0" />
       <EffectComposer>
         <Bloom mipmapBlur intensity={0.9} luminanceThreshold={0.4} luminanceSmoothing={0.6} radius={0.7} />
       </EffectComposer>
