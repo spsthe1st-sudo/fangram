@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { motion, useScroll, useTransform, useVelocity, useSpring } from 'framer-motion'
+import { motion, AnimatePresence, useScroll, useTransform, useVelocity, useSpring } from 'framer-motion'
 import Lenis from 'lenis'
 import Hero3D from './components/Hero3D'
 import { STATS, SEGMENTS, PHASES, REVENUE, FLYWHEEL, GTM, ROADMAP, COMPETE, MOAT } from './data'
@@ -147,6 +147,28 @@ function FlywheelCircle({ items }) {
   )
 }
 
+/* rotating word in the hero tagline */
+function RotatingWord({ words }) {
+  const [i, setI] = useState(0)
+  useEffect(() => {
+    const t = setInterval(() => setI((v) => (v + 1) % words.length), 2200)
+    return () => clearInterval(t)
+  }, [words.length])
+  return (
+    <span className="rot">
+      <AnimatePresence mode="wait">
+        <motion.span
+          key={i} className="rot-word flow-text"
+          initial={{ y: '0.7em', opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: '-0.7em', opacity: 0 }}
+          transition={{ duration: 0.4, ease }}
+        >
+          {words[i]}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  )
+}
+
 /* kinetic marquee band — leans with scroll velocity */
 function Marquee({ items }) {
   const row = [...items, ...items]
@@ -236,7 +258,7 @@ export default function App() {
             initial={{ opacity: 0 }} animate={{ opacity: 1 }}
             transition={{ duration: 1, ease, delay: 0.5 }}
           >
-            Turning influence into a business.
+            Turning influence into a <RotatingWord words={['business.', 'brand.', 'living.', 'legacy.']} />
           </motion.p>
           <motion.p
             className="hero-line"
