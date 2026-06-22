@@ -417,6 +417,7 @@ export default function App() {
             Start with India’s talent, prove the engine on the people the world ignored, then take it
             everywhere talent is rich and monetisation is thin. That’s the company I want to help build.
           </p>
+          <a href="#top" className="close-cta">Take it from the top ↑</a>
           <div className="close-by">
             <span>A point of view by</span>
             <strong>Shaurya Pratap Singh</strong>
