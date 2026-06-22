@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, useVelocity, useSpring } from 'framer-motion'
 import Lenis from 'lenis'
 import Hero3D from './components/Hero3D'
 import { STATS, SEGMENTS, PHASES, REVENUE, FLYWHEEL, GTM, ROADMAP, COMPETE, MOAT } from './data'
@@ -147,19 +147,24 @@ function FlywheelCircle({ items }) {
   )
 }
 
-/* kinetic marquee band */
+/* kinetic marquee band — leans with scroll velocity */
 function Marquee({ items }) {
   const row = [...items, ...items]
+  const { scrollY } = useScroll()
+  const vel = useVelocity(scrollY)
+  const skew = useSpring(useTransform(vel, [-2500, 0, 2500], [7, 0, -7], { clamp: true }), { damping: 50, stiffness: 400 })
   return (
     <div className="marquee">
-      <motion.div
-        className="marquee-row"
-        animate={{ x: ['0%', '-50%'] }}
-        transition={{ duration: 24, ease: 'linear', repeat: Infinity }}
-      >
-        {row.map((w, i) => (
-          <span className="marquee-item" key={i}>{w}<span className="marquee-dot">✦</span></span>
-        ))}
+      <motion.div className="marquee-skew" style={{ skewX: skew }}>
+        <motion.div
+          className="marquee-row"
+          animate={{ x: ['0%', '-50%'] }}
+          transition={{ duration: 24, ease: 'linear', repeat: Infinity }}
+        >
+          {row.map((w, i) => (
+            <span className="marquee-item" key={i}>{w}<span className="marquee-dot">✦</span></span>
+          ))}
+        </motion.div>
       </motion.div>
     </div>
   )
