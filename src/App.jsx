@@ -179,7 +179,7 @@ export default function App() {
 
       {/* THE SHIFT — scroll-scrubbed cinematic chapter */}
       <ScrollSequence
-        count={96}
+        count={64}
         eyebrow="The shift"
         title={<>Influence is everywhere.<br /><span className="muted">Monetisation isn’t.</span></>}
       />
