@@ -162,13 +162,25 @@
 .rev-k { font-size: clamp(18px, 2vw, 24px); font-weight: 300; color: #fff; letter-spacing: -0.01em; }
 .rev-v { font-size: 15px; line-height: 1.55; color: var(--smoke); }
 
-/* ---------- FLYWHEEL ---------- */
-.fly { margin-top: 52px; max-width: 760px; }
-.fly-step { position: relative; padding: 20px 0; }
-.fly-no { font-size: 18px; font-weight: 300; margin-bottom: 8px; }
-.fly-k { font-size: clamp(22px, 2.6vw, 32px); font-weight: 300; color: #fff; letter-spacing: -0.015em; }
-.fly-v { font-size: 15.5px; line-height: 1.55; color: var(--smoke); margin-top: 8px; max-width: 44ch; }
-.fly-arrow { position: absolute; left: 0; bottom: -12px; color: var(--ash); font-size: 17px; }
+/* ---------- FLYWHEEL (circular) ---------- */
+.flyc { position: relative; width: min(760px, 92vw); aspect-ratio: 1 / 1; margin: 64px auto 12px; }
+.flyc-ring { position: absolute; inset: 24%; border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0deg, var(--flow-green) 60deg, var(--flow-amber) 150deg, var(--flow-coral) 240deg, var(--flow-violet) 330deg, transparent 360deg);
+  -webkit-mask: radial-gradient(closest-side, transparent 71%, #000 72%); mask: radial-gradient(closest-side, transparent 71%, #000 72%);
+  animation: flyspin 18s linear infinite; opacity: 0.9; }
+.flyc-ring2 { inset: 31%; animation-direction: reverse; animation-duration: 28s; opacity: 0.3; }
+@keyframes flyspin { to { transform: rotate(360deg); } }
+.flyc-core { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; }
+.flyc-core-lbl { display: block; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ash); }
+.flyc-core-mark { font-size: 30px; font-weight: 300; color: #fff; }
+.flyc-node { position: absolute; width: 178px; }
+.flyc-no { font-size: 15px; margin-bottom: 5px; }
+.flyc-k { font-size: 17px; color: #fff; font-weight: 400; margin-bottom: 6px; letter-spacing: -0.01em; }
+.flyc-v { font-size: 12.5px; line-height: 1.45; color: var(--smoke); }
+.flyc-top { left: 50%; top: 0; transform: translate(-50%, 0); text-align: center; }
+.flyc-bottom { left: 50%; bottom: 0; transform: translate(-50%, 0); text-align: center; }
+.flyc-left { left: 0; top: 50%; transform: translate(0, -50%); text-align: right; }
+.flyc-right { right: 0; top: 50%; transform: translate(0, -50%); text-align: left; }
 .fly-note { margin-top: 34px; }
 
 /* ---------- RESPONSIVE ---------- */
@@ -178,6 +190,9 @@
   .phases, .moat, .segs { grid-template-columns: 1fr; }
   .rev-row { grid-template-columns: 40px 1fr; }
   .rev-row .rev-v { grid-column: 1 / -1; }
+  .flyc { width: 100%; aspect-ratio: auto; margin-top: 40px; }
+  .flyc-ring, .flyc-core { display: none; }
+  .flyc-node { position: static !important; width: auto !important; transform: none !important; text-align: left !important; padding: 18px 0; border-bottom: 1px solid var(--line); }
   .gtm-row { grid-template-columns: 40px 1fr; }
   .gtm-row .gtm-v { grid-column: 1 / -1; }
   .frame-band.reverse .frame-overlay { text-align: left; align-items: flex-start; }

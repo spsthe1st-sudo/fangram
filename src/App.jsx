@@ -122,6 +122,31 @@ function ParallaxFrame({ children, src, alt, label, reverse }) {
   )
 }
 
+/* animated circular flywheel */
+function FlywheelCircle({ items }) {
+  const where = ['flyc-top', 'flyc-right', 'flyc-bottom', 'flyc-left']
+  return (
+    <motion.div
+      className="flyc"
+      initial={{ opacity: 0, scale: 0.92 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true, margin: '-80px' }}
+      transition={{ duration: 1, ease }}
+    >
+      <div className="flyc-ring" />
+      <div className="flyc-ring flyc-ring2" />
+      <div className="flyc-core"><span className="flyc-core-lbl">The</span><span className="flyc-core-mark">loop</span></div>
+      {items.map((it, i) => (
+        <div className={`flyc-node ${where[i]}`} key={it.k}>
+          <div className="flyc-no flow-text">{String(i + 1).padStart(2, '0')}</div>
+          <div className="flyc-k">{it.k}</div>
+          <div className="flyc-v">{it.v}</div>
+        </div>
+      ))}
+    </motion.div>
+  )
+}
+
 /* kinetic marquee band */
 function Marquee({ items }) {
   const row = [...items, ...items]
@@ -344,21 +369,7 @@ export default function App() {
       <section className="band" id="flywheel">
         <Reveal><p className="eyebrow">Why it compounds · the flywheel</p></Reveal>
         <Reveal delay={0.05}><h2 className="big">Each side makes<br />the next one stronger.</h2></Reveal>
-        <div className="fly">
-          {FLYWHEEL.map((f, i) => (
-            <motion.div
-              key={f.k} className="fly-step"
-              initial={{ opacity: 0, y: 36 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-70px' }}
-              transition={{ duration: 0.85, ease, delay: i * 0.1 }}
-            >
-              <div className="fly-no flow-text">{String(i + 1).padStart(2, '0')}</div>
-              <div className="fly-k">{f.k}</div>
-              <div className="fly-v">{f.v}</div>
-              {i < FLYWHEEL.length - 1 && <div className="fly-arrow">↓</div>}
-            </motion.div>
-          ))}
-        </div>
+        <FlywheelCircle items={FLYWHEEL} />
         <Reveal delay={0.1}>
           <p className="lead wide fly-note">
             Spin it once and it doesn’t stop: more talent brings more fans, fan spend pulls brand
