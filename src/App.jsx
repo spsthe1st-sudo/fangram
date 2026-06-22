@@ -179,6 +179,25 @@ export default function App() {
     return () => lenis.destroy()
   }, [])
 
+  // soft glowing cursor follower (desktop only)
+  useEffect(() => {
+    if (window.matchMedia('(pointer: coarse)').matches) return
+    const dot = document.createElement('div')
+    dot.className = 'cursor-glow'
+    document.body.appendChild(dot)
+    let rx = innerWidth / 2, ry = innerHeight / 2, x = rx, y = ry, raf
+    const move = (e) => { rx = e.clientX; ry = e.clientY }
+    const sel = 'a,button,.seg,.phase,.road-col,.moat-card,.close-cta,.rev-row'
+    const over = (e) => { if (e.target.closest(sel)) dot.classList.add('big') }
+    const out = (e) => { if (e.target.closest(sel)) dot.classList.remove('big') }
+    const loop = () => { x += (rx - x) * 0.2; y += (ry - y) * 0.2; dot.style.transform = `translate(${x}px,${y}px)`; raf = requestAnimationFrame(loop) }
+    loop()
+    window.addEventListener('mousemove', move)
+    document.addEventListener('mouseover', over)
+    document.addEventListener('mouseout', out)
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('mousemove', move); document.removeEventListener('mouseover', over); document.removeEventListener('mouseout', out); dot.remove() }
+  }, [])
+
   return (
     <div className="page">
       <motion.div className="progress" style={{ scaleX: pageProgress }} />
