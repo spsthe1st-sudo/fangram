@@ -191,6 +191,13 @@
 .flyc-right { right: 0; top: 50%; transform: translate(0, -50%); text-align: left; }
 .fly-note { margin-top: 34px; }
 
+/* ---------- MODEL EXAMPLE ---------- */
+.model-eg { margin-top: 28px; display: inline-flex; flex-direction: column; gap: 6px; padding: 18px 24px; border: 1px solid var(--line); border-radius: 4px; background: rgba(255,255,255,0.03); }
+.model-eg-l { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ash); }
+.model-eg-split { font-size: 16px; color: var(--smoke); }
+.model-eg-split b { font-weight: 500; color: #fff; }
+.frame-band.reverse .model-eg { align-self: flex-end; text-align: right; }
+
 /* ---------- HARD QUESTIONS ---------- */
 .hardq { margin-top: 52px; border-top: 1px solid var(--line); }
 .hardq-row { display: grid; grid-template-columns: 1fr 1.4fr; gap: 40px; padding: 30px 0; border-bottom: 1px solid var(--line); align-items: start; }

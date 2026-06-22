@@ -408,6 +408,10 @@ export default function App() {
             technology, fulfilment, brand deals, and a team running the operation. The take rate is
             only defensible if it earns its keep, so every point of it ships real value.
           </p>
+          <div className="model-eg">
+            <span className="model-eg-l">A ₹2,000 signed jersey</span>
+            <span className="model-eg-split"><b className="flow-text">₹1,400</b> to the athlete · <b>₹600</b> runs the platform</span>
+          </div>
         </Reveal>
       </ParallaxFrame>
 
