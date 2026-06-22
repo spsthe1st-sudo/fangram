@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Lenis from 'lenis'
 import Hero3D from './components/Hero3D'
-import { STATS, SEGMENTS, PHASES, REVENUE, FLYWHEEL, GTM, MOAT } from './data'
+import { STATS, SEGMENTS, PHASES, REVENUE, FLYWHEEL, GTM, ROADMAP, MOAT } from './data'
 import './App.css'
 
 const ease = [0.22, 1, 0.36, 1]
@@ -401,6 +401,29 @@ export default function App() {
             </p>
           </div>
         </Reveal>
+      </section>
+
+      {/* 90-DAY ROADMAP */}
+      <section className="band" id="roadmap">
+        <Reveal><p className="eyebrow">Execution · the first 90 days</p></Reveal>
+        <Reveal delay={0.05}><h2 className="big">If I had the keys,<br />here’s month one to three.</h2></Reveal>
+        <div className="road">
+          {ROADMAP.map((r, i) => (
+            <motion.div
+              key={r.d} className="road-col"
+              initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.9, ease, delay: i * 0.12 }}
+            >
+              <div className="road-d flow-text">{r.d}</div>
+              <h3 className="road-h">{r.h}</h3>
+              <ul className="road-list">
+                {r.items.map((it) => <li key={it}>{it}</li>)}
+              </ul>
+              <div className="road-exit"><span>Exit</span>{r.exit}</div>
+            </motion.div>
+          ))}
+        </div>
       </section>
 
       {/* THE MOAT */}

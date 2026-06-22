@@ -183,11 +183,23 @@
 .flyc-right { right: 0; top: 50%; transform: translate(0, -50%); text-align: left; }
 .fly-note { margin-top: 34px; }
 
+/* ---------- ROADMAP ---------- */
+.road { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 56px; }
+.road-col { border: 1px solid var(--line); padding: 30px 28px; display: flex; flex-direction: column; min-height: 330px; background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent); transition: border-color 0.4s, transform 0.4s; }
+.road-col:hover { border-color: var(--flow-coral); transform: translateY(-4px); }
+.road-d { font-size: 15px; letter-spacing: 0.04em; margin-bottom: 10px; }
+.road-h { font-size: 24px; font-weight: 300; color: #fff; margin-bottom: 22px; letter-spacing: -0.01em; }
+.road-list { list-style: none; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.road-list li { font-size: 14px; line-height: 1.5; color: var(--smoke); padding-left: 16px; position: relative; }
+.road-list li::before { content: ''; position: absolute; left: 0; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: var(--flow-coral); }
+.road-exit { margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 13px; color: var(--ash); }
+.road-exit span { display: block; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--flow-green); margin-bottom: 4px; }
+
 /* ---------- RESPONSIVE ---------- */
 @media (max-width: 860px) {
   .nav-links { display: none; }
   .stats { grid-template-columns: repeat(2, 1fr); gap: 22px; }
-  .phases, .moat, .segs { grid-template-columns: 1fr; }
+  .phases, .moat, .segs, .road { grid-template-columns: 1fr; }
   .rev-row { grid-template-columns: 40px 1fr; }
   .rev-row .rev-v { grid-column: 1 / -1; }
   .flyc { width: 100%; aspect-ratio: auto; margin-top: 40px; }

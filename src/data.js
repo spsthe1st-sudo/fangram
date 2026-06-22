@@ -69,6 +69,24 @@ export const GTM = [
   { k: 'Then expand', v: 'India is the beachhead, not the ceiling. The proven engine travels to every thin-monetisation market.' },
 ];
 
+export const ROADMAP = [
+  {
+    d: 'Days 0–30', h: 'Land the wedge',
+    items: ['Sign 10–20 anchor talent across categories', 'Ship the merch + fan-commerce MVP', 'Instrument every interaction from day one'],
+    exit: 'first drops live, data flowing',
+  },
+  {
+    d: 'Days 31–60', h: 'Prove repeat',
+    items: ['Run the first cohort as a live test', 'Read repeat purchase by talent, not vanity GMV', 'Kill what stalls, double down on what sells'],
+    exit: 'a repeatable winning motion',
+  },
+  {
+    d: 'Days 61–90', h: 'Spin the flywheel',
+    items: ['Onboard the first brand partnerships', 'Pilot the engagement and access layer', 'Use the data to plan the next, larger cohort'],
+    exit: 'flywheel turning, scale plan ready',
+  },
+];
+
 export const MOAT = [
   { k: 'Fan data', v: 'The relationship and purchase history no single tool owns today.' },
   { k: 'Multi-rail revenue', v: 'Five income streams that diversify and retain talent.' },
