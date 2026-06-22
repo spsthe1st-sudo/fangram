@@ -188,6 +188,16 @@
 .flyc-right { right: 0; top: 50%; transform: translate(0, -50%); text-align: left; }
 .fly-note { margin-top: 34px; }
 
+/* ---------- COMPETITIVE TABLE ---------- */
+.cmp { margin-top: 52px; border-top: 1px solid var(--line); overflow-x: auto; }
+.cmp-head, .cmp-row { display: grid; grid-template-columns: 1.1fr 1.3fr 1.3fr 1.1fr 0.9fr; gap: 16px; padding: 18px 18px; align-items: center; border-bottom: 1px solid var(--line); min-width: 680px; }
+.cmp-head { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ash); }
+.cmp-row { font-size: 15px; color: var(--smoke); transition: background 0.3s; }
+.cmp-name { font-size: 18px; color: #fff; font-weight: 400; letter-spacing: -0.01em; }
+.cmp-row.us { background: linear-gradient(90deg, rgba(61,220,151,0.07), rgba(139,92,255,0.07)); box-shadow: inset 2px 0 0 var(--flow-coral); }
+.cmp-row.us span { color: #fff; }
+.cmp-row.us .cmp-name { background: var(--gradient-flow); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-weight: 500; }
+
 /* ---------- ROADMAP ---------- */
 .road { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 56px; }
 .road-col { border: 1px solid var(--line); padding: 30px 28px; display: flex; flex-direction: column; min-height: 330px; background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent); transition: border-color 0.4s, transform 0.4s; }

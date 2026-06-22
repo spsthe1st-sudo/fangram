@@ -87,6 +87,13 @@ export const ROADMAP = [
   },
 ];
 
+export const COMPETE = [
+  { name: 'Cameo', model: 'One-off videos', take: '25%', repeat: 'No', rails: 'One' },
+  { name: 'Patreon', model: 'Membership', take: '~10%', repeat: 'Yes', rails: 'One' },
+  { name: 'Fanfix', model: 'Subscriptions', take: '20%', repeat: 'Yes', rails: 'Few' },
+  { name: 'FanGram', model: 'Full-stack engine', take: '30%, falls at scale', repeat: 'Built-in', rails: 'Five', us: true },
+];
+
 export const MOAT = [
   { k: 'Fan data', v: 'The relationship and purchase history no single tool owns today.' },
   { k: 'Multi-rail revenue', v: 'Five income streams that diversify and retain talent.' },

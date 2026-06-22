@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import Lenis from 'lenis'
 import Hero3D from './components/Hero3D'
-import { STATS, SEGMENTS, PHASES, REVENUE, FLYWHEEL, GTM, ROADMAP, MOAT } from './data'
+import { STATS, SEGMENTS, PHASES, REVENUE, FLYWHEEL, GTM, ROADMAP, COMPETE, MOAT } from './data'
 import './App.css'
 
 const ease = [0.22, 1, 0.36, 1]
@@ -383,6 +383,34 @@ export default function App() {
           </p>
         </Reveal>
       </ParallaxFrame>
+
+      {/* WHERE WE SIT — competitive positioning */}
+      <section className="band" id="field">
+        <Reveal><p className="eyebrow">Where we sit · the field</p></Reveal>
+        <Reveal delay={0.05}><h2 className="big">Built on what the<br />others left on the table.</h2></Reveal>
+        <Reveal delay={0.1}>
+          <div className="cmp">
+            <div className="cmp-head">
+              <span>Platform</span><span>Model</span><span>Take</span><span>Repeat revenue</span><span>Revenue rails</span>
+            </div>
+            {COMPETE.map((c) => (
+              <div className={`cmp-row ${c.us ? 'us' : ''}`} key={c.name}>
+                <span className="cmp-name">{c.name}</span>
+                <span>{c.model}</span>
+                <span>{c.take}</span>
+                <span>{c.repeat}</span>
+                <span>{c.rails}</span>
+              </div>
+            ))}
+          </div>
+        </Reveal>
+        <Reveal delay={0.12}>
+          <p className="lead wide" style={{ marginTop: '34px' }}>
+            A higher take is only fair because we do more. And unlike Cameo, the whole model is built on
+            <b> repeat purchase and many rails</b>, the two things a one-off novelty never had.
+          </p>
+        </Reveal>
+      </section>
 
       {/* THE COLLABORATION FLYWHEEL */}
       <section className="band" id="flywheel">
