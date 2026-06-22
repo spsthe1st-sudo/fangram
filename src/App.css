@@ -31,6 +31,8 @@
 .nav-links a { position: relative; }
 .nav-links a::after { content: ''; position: absolute; left: 0; right: 100%; bottom: -5px; height: 1px; background: #fff; transition: right 0.35s ease; }
 .nav-links a:hover::after { right: 0; }
+.nav-links a.on { opacity: 1; }
+.nav-links a.on::after { right: 0; }
 
 /* ---------- NAV ---------- */
 .nav {

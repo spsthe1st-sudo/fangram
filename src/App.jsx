@@ -198,6 +198,18 @@ export default function App() {
   const heroTextY = useTransform(scrollYProgress, [0, 1], [0, -120])
   const heroFade = useTransform(scrollYProgress, [0, 0.8], [1, 0])
   const { scrollYProgress: pageProgress } = useScroll()
+  const [active, setActive] = useState('')
+
+  // active-section nav highlight
+  useEffect(() => {
+    const ids = ['wedge', 'who', 'launch', 'model', 'close']
+    const obs = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) setActive(e.target.id) }),
+      { rootMargin: '-45% 0px -50% 0px' }
+    )
+    ids.forEach((id) => { const el = document.getElementById(id); if (el) obs.observe(el) })
+    return () => obs.disconnect()
+  }, [])
 
   useEffect(() => {
     const lenis = new Lenis({ duration: 1.1, smoothWheel: true })
@@ -234,11 +246,11 @@ export default function App() {
       <nav className="nav">
         <a href="#top" className="nav-logo">FANGRAM</a>
         <div className="nav-links">
-          <a href="#wedge">Opportunity</a>
-          <a href="#who">Audience</a>
-          <a href="#launch">Launch</a>
-          <a href="#model">Model</a>
-          <a href="#close">Vision</a>
+          <a href="#wedge" className={active === 'wedge' ? 'on' : ''}>Opportunity</a>
+          <a href="#who" className={active === 'who' ? 'on' : ''}>Audience</a>
+          <a href="#launch" className={active === 'launch' ? 'on' : ''}>Launch</a>
+          <a href="#model" className={active === 'model' ? 'on' : ''}>Model</a>
+          <a href="#close" className={active === 'close' ? 'on' : ''}>Vision</a>
         </div>
       </nav>
 
