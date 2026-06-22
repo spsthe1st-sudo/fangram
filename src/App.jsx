@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform, useVelocity, useSpring } from 'framer-motion'
 import Lenis from 'lenis'
 import Hero3D from './components/Hero3D'
-import { STATS, SEGMENTS, PHASES, REVENUE, FLYWHEEL, GTM, ROADMAP, COMPETE, MOAT } from './data'
+import { STATS, SEGMENTS, PHASES, REVENUE, FLYWHEEL, GTM, ROADMAP, COMPETE, HARDQ, MOAT } from './data'
 import './App.css'
 
 const ease = [0.22, 1, 0.36, 1]
@@ -509,6 +509,20 @@ export default function App() {
             <Reveal key={m.k} delay={i * 0.1} className="moat-card">
               <div className="moat-k">{m.k}</div>
               <div className="moat-v">{m.v}</div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* THE HARD QUESTIONS */}
+      <section className="band" id="questions">
+        <Reveal><p className="eyebrow">The hard questions</p></Reveal>
+        <Reveal delay={0.05}><h2 className="big">The questions I’d<br />ask too.</h2></Reveal>
+        <div className="hardq">
+          {HARDQ.map((item, i) => (
+            <Reveal key={item.q} delay={i * 0.08} className="hardq-row">
+              <div className="hardq-q"><span className="hardq-mark">Q</span>{item.q}</div>
+              <div className="hardq-a">{item.a}</div>
             </Reveal>
           ))}
         </div>

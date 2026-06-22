@@ -94,6 +94,13 @@ export const COMPETE = [
   { name: 'FanGram', model: 'Full-stack engine', take: '30%, falls at scale', repeat: 'Built-in', rails: 'Five', us: true },
 ];
 
+export const HARDQ = [
+  { q: 'Isn’t this just Cameo?', a: 'Cameo sold a one-off novelty on a single rail. FanGram is built on repeat purchase across five. Same space, opposite model, opposite outcome.' },
+  { q: 'Why a 30% take rate?', a: 'Because we run the whole business: fulfilment, brand deals, tooling, support. It falls as we scale, and talent still keeps the 70% that matters most.' },
+  { q: 'Why India first?', a: 'Millions of under-monetised talent, almost no infrastructure, and the global players aren’t here. The widest gap with the least competition.' },
+  { q: 'What if talent won’t switch?', a: 'We never ask them to. We add income they don’t have today, then quietly become the system they run on.' },
+];
+
 export const MOAT = [
   { k: 'Fan data', v: 'The relationship and purchase history no single tool owns today.' },
   { k: 'Multi-rail revenue', v: 'Five income streams that diversify and retain talent.' },
